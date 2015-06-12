@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:CatchupCast.ViewModel"
+                    xmlns:v="clr-namespace:CatchupCast.View">
+    <DataTemplate DataType="{x:Type vm:AppVM}">
+        <v:AppView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:PlayerVM}">
+        <v:PlayerView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:PodcastLibraryVM}">
+        <v:PodcastLibraryView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:PodcastVM}">
+        <v:PodcastView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:EpisodeVM}">
+        <v:EpisodeView/>
+    </DataTemplate>
+</ResourceDictionary>
