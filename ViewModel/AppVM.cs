@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
+using Microsoft.Practices.Prism.Mvvm;
 
 namespace CatchupCast.ViewModel
 {
-  public class AppVM
+  public class AppVM : BindableBase
   {
     #region Members
     PodcastLibraryVM _library;
@@ -28,13 +29,13 @@ namespace CatchupCast.ViewModel
     public PodcastLibraryVM Library
     {
       get { return _library; }
-      set { _library = value; }
+      set { SetProperty(ref this._library, value); }
     }
 
     public PlayerVM Player
     {
       get { return _player; }
-      set { _player = value; }
+      set { SetProperty(ref this._player, value); }
     }
     #endregion
 

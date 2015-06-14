@@ -8,10 +8,14 @@ using CatchupCast.Model;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Unity;
+using Microsoft.Practices.Prism.Mvvm;
+using System.ServiceModel.Syndication;
+using System.Windows.Input;
+using System.Xml;
 
 namespace CatchupCast.ViewModel
 {
-  public class PodcastLibraryVM : NotificationObject
+  public class PodcastLibraryVM : BindableBase
   {
     #region Members
     private PodcastLibrary _library;
@@ -34,13 +38,7 @@ namespace CatchupCast.ViewModel
         _podcasts.Add(pvm);
       }
 
-      AddPodcastCommand = new DelegateCommand(() =>
-      {
-        PodcastVM npvm = Container.Resolve<PodcastVM>();
-        npvm.Syndication = _newurl;
-        _library.Library.Add(npvm.Title, npvm.Podcast);
-      }
-      );
+      AddPodcastCommand = new DelegateCommand<object>(this.OnAddPodcast, this.CanAddPodcast);
     }
     #endregion
 
@@ -50,7 +48,7 @@ namespace CatchupCast.ViewModel
     public PodcastLibrary Library
     {
       get { return _library; }
-      set { _library = value; }
+      set { SetProperty(ref this._library, value); }
     }
 
     public String NewUrl
@@ -58,23 +56,49 @@ namespace CatchupCast.ViewModel
       get { return _newurl; }
       set 
       { 
-        _newurl = value;
-        RaisePropertyChanged("NewUrl");
+        SetProperty(ref this._newurl, value);
+        RaiseCanExecuteChanged();
       }
     }
 
     public ObservableCollection<PodcastVM> Podcasts
     {
       get { return _podcasts; }
-      set { _podcasts = value; }
+      set { SetProperty(ref this._podcasts, value); }
     }
     #endregion
 
     #region CommandProperties
-    public DelegateCommand AddPodcastCommand { get; set; }
+    public ICommand AddPodcastCommand { get; set; }
     #endregion
 
     #region Interactivity
+    private void OnAddPodcast(object arg)   
+    {
+        PodcastVM npvm = Container.Resolve<PodcastVM>();
+        npvm.Syndication = _newurl;
+        _library.Library.Add(npvm.Title, npvm.Podcast);
+    }
+
+    private bool CanAddPodcast(object arg) 
+    {
+      try
+      {
+        SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(NewUrl));
+        return true;
+      }
+      catch (Exception)
+      {
+        return false;
+      }
+    }
+
+    private void RaiseCanExecuteChanged()
+    {
+        DelegateCommand<object> command = AddPodcastCommand as DelegateCommand<object>;
+        command.RaiseCanExecuteChanged();
+    }
+
     #endregion
 
   }

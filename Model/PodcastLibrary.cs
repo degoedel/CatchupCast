@@ -9,5 +9,10 @@ namespace CatchupCast.Model
   public class PodcastLibrary
   {
     public Dictionary<String, Podcast> Library { get; set; }
+
+    public PodcastLibrary()
+    {
+        Library = new Dictionary<String, Podcast>();
+    }
   }
 }

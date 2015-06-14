@@ -4,19 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CatchupCast.Model;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Prism.Mvvm;
 
 namespace CatchupCast.ViewModel
 {
-  public class PodcastVM
+  public class PodcastVM : BindableBase
   {
     #region Members
     private Podcast _podcast;
     #endregion
 
     #region Constructors
+    public PodcastVM(IUnityContainer container)
+    {
+      Container = container;
+      _podcast = new Podcast();
+    }
+
     #endregion
 
     #region Properties
+    private IUnityContainer Container { get; set; }
+
     public Podcast Podcast
     {
       get { return _podcast; }
