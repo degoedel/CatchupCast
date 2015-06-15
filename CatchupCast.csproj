@@ -99,10 +99,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Infrastructure\ISyndicationAnalyzer.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Modules\ExportModule.cs" />
     <Compile Include="Modules\ImportModule.cs" />
     <Compile Include="Modules\InteractivityModule.cs" />
+    <Compile Include="Services\SyndicationAnalyzer.cs" />
     <Compile Include="ViewModel\AppVM.cs" />
     <Compile Include="ViewModel\EpisodeVM.cs" />
     <Compile Include="ViewModel\PlayerVM.cs" />
