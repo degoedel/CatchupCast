@@ -75,9 +75,11 @@ namespace CatchupCast.ViewModel
     #region Interactivity
     private void OnAddPodcast(object arg)   
     {
-        PodcastVM npvm = Container.Resolve<PodcastVM>();
-        npvm.Syndication = _newurl;
-        _library.Library.Add(npvm.Title, npvm.Podcast);
+      PodcastVM npvm = Container.Resolve<PodcastVM>();
+      npvm.Syndication = _newurl;
+      _library.Library.Add(npvm.Title, npvm.Podcast);
+      Podcasts.Add(npvm);
+      NewUrl = "";
     }
 
     private bool CanAddPodcast(object arg) 

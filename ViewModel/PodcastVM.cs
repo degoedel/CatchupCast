@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CatchupCast.Model;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.Mvvm;
+using CatchupCast.Infrastructure;
 
 namespace CatchupCast.ViewModel
 {
@@ -36,13 +37,24 @@ namespace CatchupCast.ViewModel
     public String Syndication
     {
       get { return _podcast.Syndication; }
-      set { _podcast.Syndication = value; }
+      set 
+      { 
+        _podcast.Syndication = value;
+        ISyndicationAnalyzer analyzer = Container.Resolve<ISyndicationAnalyzer>();
+        analyzer.InitializePodcast(ref _podcast);
+      }
     }
 
     public String Title
     {
       get { return _podcast.Title; }
       set { _podcast.Title = value; }
+    }
+
+    public String Cover
+    {
+      get { return _podcast.Cover; }
+      set { _podcast.Cover = value; }
     }
     #endregion
 

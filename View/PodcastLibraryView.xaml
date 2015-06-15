@@ -17,11 +17,11 @@
         </Grid.ColumnDefinitions>
         <TextBox Grid.Row="0" Grid.Column="0" Margin="5,5,5,5" Text="{Binding Path=NewUrl, UpdateSourceTrigger=PropertyChanged}"/>
         <Button Grid.Row="0" Grid.Column="1"  Width="50" Content="Add" Margin="5,5,5,5" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddPodcastCommand}"/>
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-            <ItemsControl ItemsSource="{Binding Path=Library, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <StackPanel Grid.Row="1" Orientation="Vertical" Grid.ColumnSpan="2">
+            <ItemsControl ItemsSource="{Binding Path=Podcasts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding Path=Cover}"/>
+                      <Image Source="{Binding Path=Cover}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
