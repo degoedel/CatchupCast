@@ -21,7 +21,7 @@
             <ItemsControl ItemsSource="{Binding Path=Podcasts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                      <Image Source="{Binding Path=Cover}"/>
+                        <Image Source="{Binding Path=Cover}" Width="200"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

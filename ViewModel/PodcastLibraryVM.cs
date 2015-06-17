@@ -84,6 +84,10 @@ namespace CatchupCast.ViewModel
 
     private bool CanAddPodcast(object arg) 
     {
+      if (_library.Library.ContainsKey(NewUrl))
+      {
+        return false;
+      }
       try
       {
         SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(NewUrl));

@@ -30,7 +30,27 @@ namespace CatchupCast.Services
 
     private void loadItemsFromFeed(ref Podcast podcast, ref SyndicationFeed feed)
     {
+      foreach (SyndicationItem item in feed.Items)
+      {
+        Episode nep = new Episode();
+        nep.Title = item.Title.Text;
+        nep.Summary = item.Summary.Text;
+/*
+        var xml = XDocument.Load("http://thepointjax.com/Podcast/podcast.xml");
 
+ XNamespace ns = "http://www.itunes.com/dtds/podcast-1.0.dtd";
+ foreach (var item in xml.Descendants("item"))
+ {
+     var title = item.Element("title").Value;
+     var subtitle = item.Element(ns + "subtitle").Value;
+     var author = item.Element(ns + "author").Value;
+
+     PodcastItemsList.Add (new PodcastItem(title, subtitle, author));
+ }
+        nep.Duration = item.
+        String summary = item.Summary.Text;
+ * */
+      }
     }
 
   }
