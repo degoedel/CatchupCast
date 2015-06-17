@@ -77,7 +77,7 @@ namespace CatchupCast.ViewModel
     {
       PodcastVM npvm = Container.Resolve<PodcastVM>();
       npvm.Syndication = _newurl;
-      _library.Library.Add(npvm.Title, npvm.Podcast);
+      _library.Library.Add(npvm.Syndication, npvm.Podcast);
       Podcasts.Add(npvm);
       NewUrl = "";
     }

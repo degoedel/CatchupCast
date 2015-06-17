@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CatchupCast.Infrastructure;
 using CatchupCast.Model;
-using System.ServiceModel.Syndication;
-using System.Xml;
+using System.Xml.Linq;
 
 namespace CatchupCast.Services
 {
@@ -15,41 +14,39 @@ namespace CatchupCast.Services
     #region ISyndicationAnalyzer Members
     public void InitializePodcast(ref Podcast podcast)
     {
-      SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(podcast.Syndication));
-      podcast.Title = feed.Title.Text;
-      podcast.Cover = feed.ImageUrl.AbsoluteUri;
-      loadItemsFromFeed(ref podcast, ref feed);
+      var xml = XDocument.Load(podcast.Syndication);
+      XNamespace ns = "http://www.itunes.com/dtds/podcast-1.0.dtd";
+      podcast.Title = xml.Element("rss").Element("channel").Element("title").Value;
+      podcast.Cover = xml.Element("rss").Element("channel").Element("image").Element("url").Value;
+      podcast.Summary = xml.Element("rss").Element("channel").Element(ns + "summary").Value;
+
+      loadItemsFromFeed(ref podcast, ref xml, ref ns);
     }
 
     public void RefreshPodcast(ref Podcast podcast)
     {
-      SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(podcast.Syndication));
-      loadItemsFromFeed(ref podcast, ref feed);
+      var xml = XDocument.Load(podcast.Syndication);
+      XNamespace ns = "http://www.itunes.com/dtds/podcast-1.0.dtd";
+      loadItemsFromFeed(ref podcast, ref xml, ref ns);
     }
     #endregion
 
-    private void loadItemsFromFeed(ref Podcast podcast, ref SyndicationFeed feed)
+    private void loadItemsFromFeed(ref Podcast podcast, ref XDocument xml, ref XNamespace ns)
     {
-      foreach (SyndicationItem item in feed.Items)
+      foreach (var item in xml.Descendants("item"))
       {
         Episode nep = new Episode();
-        nep.Title = item.Title.Text;
-        nep.Summary = item.Summary.Text;
-/*
-        var xml = XDocument.Load("http://thepointjax.com/Podcast/podcast.xml");
-
- XNamespace ns = "http://www.itunes.com/dtds/podcast-1.0.dtd";
- foreach (var item in xml.Descendants("item"))
- {
-     var title = item.Element("title").Value;
-     var subtitle = item.Element(ns + "subtitle").Value;
-     var author = item.Element(ns + "author").Value;
-
-     PodcastItemsList.Add (new PodcastItem(title, subtitle, author));
- }
-        nep.Duration = item.
-        String summary = item.Summary.Text;
- * */
+        nep.Title = item.Element("title").Value;
+        nep.Summary = item.Element(ns + "summary").Value;
+        nep.Subtitle = item.Element(ns + "subtitle").Value;
+        nep.Url = item.Element("enclosure").Attribute("url").Value;
+        nep.Duration = item.Element(ns + "duration").Value;
+        nep.Guid = item.Element("guid").Value;
+        nep.Published = DateTime.Parse(item.Element("pubDate").Value);
+        if (podcast.Episodes.FindIndex(ep => ep.Guid == nep.Guid) < 0)
+        {
+          podcast.Episodes.Add(nep);
+        }
       }
     }
 

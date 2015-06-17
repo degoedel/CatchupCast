@@ -7,6 +7,7 @@ using CatchupCast.Model;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.Mvvm;
 using CatchupCast.Infrastructure;
+using System.Collections.ObjectModel;
 
 namespace CatchupCast.ViewModel
 {
@@ -14,6 +15,7 @@ namespace CatchupCast.ViewModel
   {
     #region Members
     private Podcast _podcast;
+    ObservableCollection<EpisodeVM> _episodes;
     #endregion
 
     #region Constructors
@@ -21,6 +23,8 @@ namespace CatchupCast.ViewModel
     {
       Container = container;
       _podcast = new Podcast();
+      _episodes = new ObservableCollection<EpisodeVM>();
+      updateEpisodeCollection();
     }
 
     #endregion
@@ -42,6 +46,7 @@ namespace CatchupCast.ViewModel
         _podcast.Syndication = value;
         ISyndicationAnalyzer analyzer = Container.Resolve<ISyndicationAnalyzer>();
         analyzer.InitializePodcast(ref _podcast);
+        updateEpisodeCollection();
       }
     }
 
@@ -56,6 +61,12 @@ namespace CatchupCast.ViewModel
       get { return _podcast.Cover; }
       set { _podcast.Cover = value; }
     }
+
+    public ObservableCollection<EpisodeVM> Episodes
+    {
+      get { return _episodes; }
+      set { SetProperty(ref this._episodes, value); }
+    }
     #endregion
 
     #region CommandProperties
@@ -64,5 +75,15 @@ namespace CatchupCast.ViewModel
     #region Interactivity
     #endregion
 
+    private void updateEpisodeCollection()
+    {
+      _episodes.Clear();
+      foreach(Episode ep in _podcast.Episodes)
+      {
+        EpisodeVM evm = Container.Resolve<EpisodeVM>();
+        evm.Episode = ep;
+        Episodes.Add(evm);
+      }
+    }
   }
 }
