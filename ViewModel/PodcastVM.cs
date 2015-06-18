@@ -67,6 +67,12 @@ namespace CatchupCast.ViewModel
       get { return _episodes; }
       set { SetProperty(ref this._episodes, value); }
     }
+
+    public String Summary
+    {
+      get { return _podcast.Summary; }
+      set { _podcast.Summary = value; }
+    }
     #endregion
 
     #region CommandProperties

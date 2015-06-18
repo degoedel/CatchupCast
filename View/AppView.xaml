@@ -16,6 +16,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <ContentControl Grid.RowSpan="2" Grid.Column="0" Content="{Binding Library}"/>
+        <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding Library.SelectedItem}"/>
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding Player}"/>
     </Grid>
 </UserControl>

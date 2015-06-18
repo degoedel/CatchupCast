@@ -21,6 +21,7 @@ namespace CatchupCast.ViewModel
     private PodcastLibrary _library;
     private String _newurl;
     ObservableCollection<PodcastVM> _podcasts;
+    private PodcastVM _selecteditem;
     #endregion
 
     #region Constructors
@@ -30,6 +31,7 @@ namespace CatchupCast.ViewModel
       _library = new PodcastLibrary();
       _newurl = "";
       _podcasts = new ObservableCollection<PodcastVM>();
+      _selecteditem = null;
 
       foreach (Podcast p in _library.Library.Values)
       {
@@ -66,6 +68,12 @@ namespace CatchupCast.ViewModel
       get { return _podcasts; }
       set { SetProperty(ref this._podcasts, value); }
     }
+
+    public PodcastVM SelectedItem
+    {
+      get { return _selecteditem; }
+      set { SetProperty(ref this._selecteditem, value); }
+    }
     #endregion
 
     #region CommandProperties
@@ -80,6 +88,7 @@ namespace CatchupCast.ViewModel
       _library.Library.Add(npvm.Syndication, npvm.Podcast);
       Podcasts.Add(npvm);
       NewUrl = "";
+      SelectedItem = npvm;
     }
 
     private bool CanAddPodcast(object arg) 
