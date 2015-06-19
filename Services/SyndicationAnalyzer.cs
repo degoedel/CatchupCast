@@ -43,7 +43,14 @@ namespace CatchupCast.Services
         nep.Duration = item.Element(ns + "duration").Value;
         nep.Guid = item.Element("guid").Value;
         nep.Published = DateTime.Parse(item.Element("pubDate").Value);
-        nep.Cover = item.Element(ns + "image").Attribute("href").Value;
+        if (item.Element(ns + "image") != null)
+        {
+          nep.Cover = item.Element(ns + "image").Attribute("href").Value;
+        }
+        else
+        {
+          nep.Cover = podcast.Cover;
+        }
         if (podcast.Episodes.FindIndex(ep => ep.Guid == nep.Guid) < 0)
         {
           podcast.Episodes.Add(nep);
