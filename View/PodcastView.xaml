@@ -16,9 +16,16 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Image Grid.Row="0" Grid.Column="0" Source="{Binding Path=Cover}"/>
-        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Path=Title}"/>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding Path=Title}"/>
         <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Path=Summary}" TextWrapping="Wrap" />
-        <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Episodes}"/>
+        <DataGrid Name="EpisodesTable" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Episodes}" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Published" Binding="{Binding Published, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Last Played" Binding="{Binding LastPlayed, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="State" Binding="{Binding State, UpdateSourceTrigger=PropertyChanged}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <ContentControl Grid.Row="2" Grid.Column="1" Content="{Binding Episodes.CurrentItem}"/>
     </Grid>
 </UserControl>

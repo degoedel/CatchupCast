@@ -12,6 +12,7 @@ using Microsoft.Practices.Prism.Mvvm;
 using System.ServiceModel.Syndication;
 using System.Windows.Input;
 using System.Xml;
+using System.Windows;
 
 namespace CatchupCast.ViewModel
 {
@@ -83,20 +84,23 @@ namespace CatchupCast.ViewModel
     #region Interactivity
     private void OnAddPodcast(object arg)   
     {
+      if (_library.Library.ContainsKey(NewUrl))
+      {
+        MessageBox.Show("This Podcast is already in the library.");
+        NewUrl = "";
+        return;
+      }
       PodcastVM npvm = Container.Resolve<PodcastVM>();
       npvm.Syndication = _newurl;
       _library.Library.Add(npvm.Syndication, npvm.Podcast);
       Podcasts.Add(npvm);
       NewUrl = "";
       SelectedItem = npvm;
+
     }
 
     private bool CanAddPodcast(object arg) 
     {
-      if (_library.Library.ContainsKey(NewUrl))
-      {
-        return false;
-      }
       try
       {
         SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(NewUrl));

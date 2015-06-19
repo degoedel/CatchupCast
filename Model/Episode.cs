@@ -17,5 +17,6 @@ namespace CatchupCast.Model
     public String Summary { get; set; }
     public String Guid { get; set; }
     public DateTime Published { get; set; }
+    public String Cover { get; set; }
   }
 }
