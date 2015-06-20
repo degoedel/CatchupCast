@@ -34,13 +34,7 @@ namespace PodCatchup.ViewModel
       _podcasts = new ObservableCollection<PodcastVM>();
       _selecteditem = null;
 
-      foreach (Podcast p in _library.Library.Values)
-      {
-        PodcastVM pvm = Container.Resolve<PodcastVM>();
-        pvm.Podcast = p;
-        _podcasts.Add(pvm);
-      }
-
+      RefreshLibrary();
       AddPodcastCommand = new DelegateCommand<object>(this.OnAddPodcast, this.CanAddPodcast);
     }
     #endregion
@@ -51,7 +45,11 @@ namespace PodCatchup.ViewModel
     public PodcastLibrary Library
     {
       get { return _library; }
-      set { SetProperty(ref this._library, value); }
+      set 
+      { 
+        SetProperty(ref this._library, value);
+        RefreshLibrary();
+      }
     }
 
     public String NewUrl
@@ -116,6 +114,16 @@ namespace PodCatchup.ViewModel
     {
         DelegateCommand<object> command = AddPodcastCommand as DelegateCommand<object>;
         command.RaiseCanExecuteChanged();
+    }
+
+    private void RefreshLibrary()
+    {
+      foreach (Podcast p in _library.Library.Values)
+      {
+        PodcastVM pvm = Container.Resolve<PodcastVM>();
+        pvm.Podcast = p;
+        Podcasts.Add(pvm);
+      }
     }
 
     #endregion

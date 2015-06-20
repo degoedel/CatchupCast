@@ -35,7 +35,11 @@ namespace PodCatchup.ViewModel
     public Podcast Podcast
     {
       get { return _podcast; }
-      set { _podcast = value; }
+      set 
+      { 
+        _podcast = value;
+        updateEpisodeCollection();
+      }
     }
 
     public String Syndication

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.Mvvm;
+using PodCatchup.Infrastructure;
+using PodCatchup.Model;
 
 namespace PodCatchup.ViewModel
 {
@@ -21,6 +23,7 @@ namespace PodCatchup.ViewModel
       Container = container;
       _library = new PodcastLibraryVM(container);
       _player = new PlayerVM();
+      AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
     }
     #endregion
 
@@ -43,6 +46,19 @@ namespace PodCatchup.ViewModel
     #endregion
 
     #region Interactivity
+    public void LoadData()
+    {
+      ILibraryLoader loader = Container.Resolve<ILibraryLoader>();
+      PodcastLibrary lib = loader.LoadLibrary();
+      Library.Library = lib;
+    }
+
+    private void OnProcessExit(object sender, EventArgs e)
+    {
+      ILibrarySaver saver = Container.Resolve<ILibrarySaver>();
+      PodcastLibrary lib = _library.Library;
+      saver.SaveLibrary(ref lib);
+    }
     #endregion
   }
 }

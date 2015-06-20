@@ -24,7 +24,14 @@ namespace PodCatchup.Services
       using (var db = new LiteDatabase(savefilename))
       {
         var col = db.GetCollection<PodcastLibrary>("customers");
-        col.Insert(library);
+        if (library.Id == 0)
+        {
+          col.Insert(library);
+        }
+        else
+        {
+          col.Update(library);
+        }
       }
     }
   }

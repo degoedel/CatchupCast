@@ -17,6 +17,10 @@ namespace PodCatchup.Services
       String mydocs = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       String appdir = Path.Combine(mydocs, "PodCatchup");
       String savefilename = Path.Combine(appdir, "PodCatchup.db");
+      if (!File.Exists(savefilename))
+      {
+        return new PodcastLibrary();
+      }
       using (var db = new LiteDatabase(savefilename))
       {
         var col = db.GetCollection<PodcastLibrary>("customers");

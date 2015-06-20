@@ -38,5 +38,13 @@ namespace PodCatchup
       return catalog;
     }
 
+    public override void Run(bool runWithDefaultConfiguration)
+    {
+      base.Run(runWithDefaultConfiguration);
+      AppVM app = (AppVM)App.Current.MainWindow.DataContext;
+      app.LoadData();
+      // modules (and everything else) have been initialized when you get here
+    }
+
   }
 }
