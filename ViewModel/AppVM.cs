@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.Mvvm;
 
-namespace CatchupCast.ViewModel
+namespace PodCatchup.ViewModel
 {
   public class AppVM : BindableBase
   {

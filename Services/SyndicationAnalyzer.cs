@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CatchupCast.Infrastructure;
-using CatchupCast.Model;
+using PodCatchup.Infrastructure;
+using PodCatchup.Model;
 using System.Xml.Linq;
 
-namespace CatchupCast.Services
+namespace PodCatchup.Services
 {
   public class SyndicationAnalyzer : ISyndicationAnalyzer
   {

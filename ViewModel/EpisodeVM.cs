@@ -1,4 +1,4 @@
-﻿using CatchupCast.Model;
+﻿using PodCatchup.Model;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CatchupCast.ViewModel
+namespace PodCatchup.ViewModel
 {
   public class EpisodeVM
   {
@@ -63,7 +63,7 @@ namespace CatchupCast.ViewModel
       {
         if (LastPlayed.CompareTo("Never") == 0)
         {
-          return "";
+          return "New";
         }
         else
         {

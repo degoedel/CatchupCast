@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CatchupCast.Model;
+using PodCatchup.Model;
 
-namespace CatchupCast.Infrastructure
+namespace PodCatchup.Infrastructure
 {
   public interface ISyndicationAnalyzer
   {

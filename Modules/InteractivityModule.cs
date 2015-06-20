@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CatchupCast.Infrastructure;
-using CatchupCast.Services;
+using PodCatchup.Infrastructure;
+using PodCatchup.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
-namespace CatchupCast.Modules
+namespace PodCatchup.Modules
 {
   public class InteractivityModule : IModule
   {

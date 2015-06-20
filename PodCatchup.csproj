@@ -7,8 +7,8 @@
     <ProjectGuid>{37678DA3-F66D-4A00-816D-6203A4D74052}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CatchupCast</RootNamespace>
-    <AssemblyName>CatchupCast</AssemblyName>
+    <RootNamespace>PodCatchup</RootNamespace>
+    <AssemblyName>PodCatchup</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiteDB">
+      <HintPath>packages\LiteDB.1.0.2\lib\net40\LiteDB.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Prism.Composition, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll</HintPath>
       <Private>True</Private>
@@ -99,11 +102,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Infrastructure\ILibraryLoader.cs" />
+    <Compile Include="Infrastructure\ILibrarySaver.cs" />
     <Compile Include="Infrastructure\ISyndicationAnalyzer.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Modules\ExportModule.cs" />
     <Compile Include="Modules\ImportModule.cs" />
     <Compile Include="Modules\InteractivityModule.cs" />
+    <Compile Include="Services\LiteDBLibraryLoader.cs" />
+    <Compile Include="Services\LiteDBLibrarySaver.cs" />
     <Compile Include="Services\SyndicationAnalyzer.cs" />
     <Compile Include="ViewModel\AppVM.cs" />
     <Compile Include="ViewModel\EpisodeVM.cs" />

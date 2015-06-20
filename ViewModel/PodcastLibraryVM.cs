@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CatchupCast.Model;
+using PodCatchup.Model;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Unity;
@@ -14,7 +14,7 @@ using System.Windows.Input;
 using System.Xml;
 using System.Windows;
 
-namespace CatchupCast.ViewModel
+namespace PodCatchup.ViewModel
 {
   public class PodcastLibraryVM : BindableBase
   {

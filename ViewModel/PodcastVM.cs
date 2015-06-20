@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CatchupCast.Model;
+using PodCatchup.Model;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.Mvvm;
-using CatchupCast.Infrastructure;
+using PodCatchup.Infrastructure;
 using System.Collections.ObjectModel;
 
-namespace CatchupCast.ViewModel
+namespace PodCatchup.ViewModel
 {
   public class PodcastVM : BindableBase
   {

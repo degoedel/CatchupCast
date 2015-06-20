@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CatchupCast.Model
+namespace PodCatchup.Model
 {
   public class Episode
   {

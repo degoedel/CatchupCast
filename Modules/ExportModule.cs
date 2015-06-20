@@ -4,18 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Unity;
+using PodCatchup.Infrastructure;
+using PodCatchup.Services;
 
-namespace CatchupCast.Modules
+namespace PodCatchup.Modules
 {
   public class ExportModule : IModule
   {
-    #region IModule Members
+    #region Constructors
+    public ExportModule(IUnityContainer container)
+    {
+      Container = container;
+    }
+    #endregion
 
+    #region IModule Members
     public void Initialize()
     {
-      //throw new NotImplementedException();
+      Container.RegisterType<ILibrarySaver, LiteDBLibrarySaver>();
     }
+    #endregion
 
+    #region Properties
+    private IUnityContainer Container { get; set; }
     #endregion
   }
 }

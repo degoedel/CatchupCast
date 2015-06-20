@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:vm="clr-namespace:CatchupCast.ViewModel"
-                    xmlns:v="clr-namespace:CatchupCast.View">
+                    xmlns:vm="clr-namespace:PodCatchup.ViewModel"
+                    xmlns:v="clr-namespace:PodCatchup.View">
     <DataTemplate DataType="{x:Type vm:AppVM}">
         <v:AppView/>
     </DataTemplate>

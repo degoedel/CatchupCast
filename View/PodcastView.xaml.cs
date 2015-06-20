@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CatchupCast.View
+namespace PodCatchup.View
 {
   /// <summary>
   /// Interaction logic for PodcastView.xaml

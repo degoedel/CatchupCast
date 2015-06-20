@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace CatchupCast
+namespace PodCatchup
 {
   /// <summary>
   /// Interaction logic for App.xaml

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CatchupCast.ViewModel
+namespace PodCatchup.ViewModel
 {
   public class PlayerVM
   {
