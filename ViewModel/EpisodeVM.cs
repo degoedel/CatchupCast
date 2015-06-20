@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Practices.Prism.PubSubEvents;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 
 namespace PodCatchup.ViewModel
 {
@@ -12,19 +15,22 @@ namespace PodCatchup.ViewModel
   {
     #region Members
     private Episode _episode;
+    protected readonly IEventAggregator _eventAggregator;
     #endregion
 
     #region Constructors
     public EpisodeVM(IUnityContainer container)
     {
       Container = container;
+      _eventAggregator = ApplicationService.Instance.EventAggregator;
       Episode = new Episode();
+      PlayEpisodeCommand = new DelegateCommand<object>(this.OnPlayEpisode, this.CanPlayEpisode);
     }
     #endregion
 
     #region Properties
     private IUnityContainer Container { get; set; }
-
+ 
     public Episode Episode 
     { 
       get { return _episode; }
@@ -119,9 +125,19 @@ namespace PodCatchup.ViewModel
     #endregion
 
     #region CommandProperties
+    public ICommand PlayEpisodeCommand { get; set; }
     #endregion
 
     #region Interactivity
+    private bool CanPlayEpisode(object arg) 
+    {
+      return true;
+    }
+
+    private void OnPlayEpisode(object arg) 
+    {
+      _eventAggregator.GetEvent<PlaySelectedEpisodeEvent>().Publish(this);
+    }
     #endregion
 
   }
