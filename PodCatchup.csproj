@@ -104,8 +104,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ApplicationService.cs" />
+    <Compile Include="Events\ApplicationService.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Events\StreamCompletedEvent.cs" />
+    <Compile Include="Events\StreamProgressEvent.cs" />
     <Compile Include="Infrastructure\ILibraryLoader.cs" />
     <Compile Include="Infrastructure\ILibrarySaver.cs" />
     <Compile Include="Infrastructure\IStreamPlayer.cs" />
@@ -121,7 +123,7 @@
     <Compile Include="ViewModel\AppVM.cs" />
     <Compile Include="ViewModel\EpisodeVM.cs" />
     <Compile Include="ViewModel\PlayerVM.cs" />
-    <Compile Include="ViewModel\PlaySelectedEpisodeEvent.cs" />
+    <Compile Include="Events\PlaySelectedEpisodeEvent.cs" />
     <Compile Include="ViewModel\PodcastLibraryVM.cs" />
     <Compile Include="ViewModel\PodcastVM.cs" />
     <Compile Include="View\AppView.xaml.cs">

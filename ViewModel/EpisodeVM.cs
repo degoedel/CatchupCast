@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
+using PodCatchup.Events;
 
 namespace PodCatchup.ViewModel
 {

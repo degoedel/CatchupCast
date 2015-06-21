@@ -1,6 +1,7 @@
 ﻿using CSCore;
 using CSCore.Codecs;
 using CSCore.SoundOut;
+using PodCatchup.Events;
 using PodCatchup.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -16,23 +17,13 @@ namespace PodCatchup.Services
   public class CSCoreStreamPlayer : IStreamPlayer
   {
 
+    public volatile bool _play;
+
    public void StreamFromUrl(string surl, int starttime)
     {
-      IWaveSource soundsource = CodecFactory.Instance.GetCodec(new Uri(surl));
-      using (ISoundOut soundOut = GetSoundOut())
-      {
-        //Tell the SoundOut which sound it has to play
-        soundOut.Initialize(soundsource);
-        TimeSpan span = new TimeSpan(0, 0, 0, 0, starttime);
-        soundsource.SetPosition(span);
-        //Play the sound
-        soundOut.Play();
-
-        Thread.Sleep(60000);
-
-        //Stop the playback
-        soundOut.Stop();
-      }
+      _play = true;
+      Thread thread = new Thread(() => performPlay(surl, starttime));
+      thread.Start();
     }
 
     public void PauseStream()
@@ -46,6 +37,26 @@ namespace PodCatchup.Services
         return new WasapiOut();
       else
         return new DirectSoundOut();
+    }
+
+    public void performPlay(String surl, int starttime)
+    {
+      IWaveSource soundsource = CodecFactory.Instance.GetCodec(new Uri(surl));
+      using (ISoundOut soundOut = GetSoundOut())
+      {
+        soundOut.Initialize(soundsource);
+        TimeSpan span = new TimeSpan(0, 0, 0, 0, starttime);
+        soundsource.SetPosition(span);
+        soundOut.Play();
+        while (_play && (soundOut.PlaybackState != PlaybackState.Stopped))
+        {
+          Thread.Sleep(100);
+          ApplicationService.Instance.EventAggregator.GetEvent<StreamProgressEvent>().Publish(soundsource.GetPosition());
+        }
+        soundOut.Stop();
+        ApplicationService.Instance.EventAggregator.GetEvent<StreamCompletedEvent>().Publish(true);
+      }
+ 
     }
 
   }

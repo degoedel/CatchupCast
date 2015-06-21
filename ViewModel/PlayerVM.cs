@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Unity;
+using PodCatchup.Events;
 using PodCatchup.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,11 @@ namespace PodCatchup.ViewModel
       Container = container;
       _eventAggregator = ApplicationService.Instance.EventAggregator;
       this._eventAggregator.GetEvent<PlaySelectedEpisodeEvent>()
-            .Subscribe((episode) => { this.PlayEpisode(episode); });
+        .Subscribe((episode) => { this.PlayEpisode(episode); });
+      this._eventAggregator.GetEvent<StreamProgressEvent>()
+        .Subscribe((signet) => { this.UpdateProgress(signet); }, ThreadOption.UIThread);
+      this._eventAggregator.GetEvent<StreamCompletedEvent>()
+        .Subscribe((done) => { this.MarkEpisodeComplete(); }, ThreadOption.UIThread);
     }
     #endregion
 
@@ -41,6 +46,16 @@ namespace PodCatchup.ViewModel
       Episode = episode;
       IStreamPlayer player = Container.Resolve<IStreamPlayer>();
       player.StreamFromUrl(Episode.Url, (int)Episode.Signet);
+    }
+
+    private void UpdateProgress(TimeSpan signet)
+    {
+
+    }
+
+    private void MarkEpisodeComplete()
+    {
+
     }
     #endregion
 

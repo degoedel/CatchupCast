@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PodCatchup
+namespace PodCatchup.Events
 {
   internal sealed class ApplicationService
   {
