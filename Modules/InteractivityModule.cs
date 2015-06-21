@@ -23,6 +23,7 @@ namespace PodCatchup.Modules
     public void Initialize()
     {
       Container.RegisterType<ISyndicationAnalyzer, SyndicationAnalyzer>();
+      Container.RegisterType<IStreamPlayer, CSCoreStreamPlayer>();
     }
     #endregion
 

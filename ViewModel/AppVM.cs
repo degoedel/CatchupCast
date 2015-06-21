@@ -22,7 +22,7 @@ namespace PodCatchup.ViewModel
     {
       Container = container;
       _library = new PodcastLibraryVM(container);
-      _player = new PlayerVM();
+      _player = new PlayerVM(container);
       AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
     }
     #endregion

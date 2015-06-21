@@ -122,6 +122,19 @@ namespace PodCatchup.ViewModel
       get { return _episode.Summary; }
       set { _episode.Summary = value; }
     }
+
+    public UInt64 Signet 
+    {
+      get { return _episode.Signet; }
+      set { _episode.Signet = value; } 
+    }
+
+    public String Url
+    {
+      get { return _episode.Url; }
+      set { _episode.Url = value; }
+    }
+
     #endregion
 
     #region CommandProperties

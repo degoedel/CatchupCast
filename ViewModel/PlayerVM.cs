@@ -1,4 +1,6 @@
 ﻿using Microsoft.Practices.Prism.PubSubEvents;
+using Microsoft.Practices.Unity;
+using PodCatchup.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,22 +17,31 @@ namespace PodCatchup.ViewModel
     #endregion
 
     #region Constructors
-    public PlayerVM()
+    public PlayerVM(IUnityContainer container)
     {
+      Container = container;
       _eventAggregator = ApplicationService.Instance.EventAggregator;
       this._eventAggregator.GetEvent<PlaySelectedEpisodeEvent>()
-            .Subscribe((episode) => { this.Episode = episode; });
+            .Subscribe((episode) => { this.PlayEpisode(episode); });
     }
     #endregion
 
     #region Properties
+    private IUnityContainer Container { get; set; }
     public EpisodeVM Episode { get; set; }
+
     #endregion
 
     #region CommandProperties
     #endregion
 
     #region Interactivity
+    private void PlayEpisode(EpisodeVM episode)
+    {
+      Episode = episode;
+      IStreamPlayer player = Container.Resolve<IStreamPlayer>();
+      player.StreamFromUrl(Episode.Url, (int)Episode.Signet);
+    }
     #endregion
 
   }
