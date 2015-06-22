@@ -9,11 +9,13 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="48"/>
-            <ColumnDefinition Width="48"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Image Grid.Column="0" Source="/CatchupCast;component/icons/Play.png" Stretch="None"/>
-        <Image Grid.Column="1" Source="/CatchupCast;component/icons/Pause.png" Stretch="None"/>
+        <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Command="{Binding TogglePlayCommand}">
+            <StackPanel>
+                <Image Source="/PodCatchup;component/icons/Play.png"/>
+            </StackPanel>
+        </Button>
         <StatusBar Grid.Column="2">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -26,10 +28,10 @@
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
             <StatusBarItem Grid.Column="0" >
-                <TextBlock Name="lblProgressStatus">00:00:00</TextBlock>
+                <Label Name="lblProgressStatus" Height="40" Width="75" Content="{Binding CurrentPositionAsTimeString}"/>
             </StatusBarItem>
             <StatusBarItem Grid.Column="1" HorizontalContentAlignment="Stretch">
-                <Slider Name="sliProgress" Value="{Binding CurrentProgress}" Maximum="{Binding Duration}" />
+                <Slider Name="sliProgress" Value="{Binding CurrentProgressAsS}" Maximum="{Binding DurationAsS}" />
             </StatusBarItem>
         </StatusBar>
     </Grid>

@@ -19,7 +19,7 @@ namespace PodCatchup.Services
 
     public volatile bool _play;
 
-   public void StreamFromUrl(string surl, int starttime)
+   public void StreamFromUrl(string surl, TimeSpan starttime)
     {
       _play = true;
       Thread thread = new Thread(() => performPlay(surl, starttime));
@@ -28,7 +28,7 @@ namespace PodCatchup.Services
 
     public void PauseStream()
     {
-      throw new NotImplementedException();
+      _play = false;
     }
 
     private ISoundOut GetSoundOut()
@@ -39,14 +39,13 @@ namespace PodCatchup.Services
         return new DirectSoundOut();
     }
 
-    public void performPlay(String surl, int starttime)
+    public void performPlay(String surl, TimeSpan starttime)
     {
       IWaveSource soundsource = CodecFactory.Instance.GetCodec(new Uri(surl));
       using (ISoundOut soundOut = GetSoundOut())
       {
         soundOut.Initialize(soundsource);
-        TimeSpan span = new TimeSpan(0, 0, 0, 0, starttime);
-        soundsource.SetPosition(span);
+        soundsource.SetPosition(starttime);
         soundOut.Play();
         while (_play && (soundOut.PlaybackState != PlaybackState.Stopped))
         {

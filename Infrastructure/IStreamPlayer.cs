@@ -8,7 +8,7 @@ namespace PodCatchup.Infrastructure
 {
   public interface IStreamPlayer
   {
-    void StreamFromUrl(String surl, int starttime);
+    void StreamFromUrl(String surl, TimeSpan starttime);
     void PauseStream();
   }
 }

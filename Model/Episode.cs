@@ -9,7 +9,7 @@ namespace PodCatchup.Model
   public class Episode
   {
     public DateTime LastPlayed { get; set; }
-    public UInt64 Signet { get; set; }
+    public TimeSpan Signet { get; set; }
     public String Title { get; set; }
     public String Subtitle { get; set; }
     public String Url { get; set; }
