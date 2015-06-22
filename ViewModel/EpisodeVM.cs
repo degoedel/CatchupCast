@@ -9,14 +9,18 @@ using Microsoft.Practices.Prism.PubSubEvents;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using PodCatchup.Events;
+using Microsoft.Practices.Prism.Mvvm;
 
 namespace PodCatchup.ViewModel
 {
-  public class EpisodeVM
+  public class EpisodeVM : BindableBase
   {
+    public enum PlayingState { Stopped, Playing };
+
     #region Members
     private Episode _episode;
     protected readonly IEventAggregator _eventAggregator;
+    private PlayingState _playState;
     #endregion
 
     #region Constructors
@@ -26,6 +30,7 @@ namespace PodCatchup.ViewModel
       _eventAggregator = ApplicationService.Instance.EventAggregator;
       Episode = new Episode();
       PlayEpisodeCommand = new DelegateCommand<object>(this.OnPlayEpisode, this.CanPlayEpisode);
+      _playState = PlayingState.Stopped;
     }
     #endregion
 
@@ -62,6 +67,32 @@ namespace PodCatchup.ViewModel
         return _episode.LastPlayed.ToString(); 
       }
       set { _episode.LastPlayed = DateTime.Parse(value); }
+    }
+
+    public String PlayStateAsStr
+    {
+      get
+      {
+        if (PlayState == PlayingState.Playing)
+        {
+          return ">";
+        }
+        else
+        {
+          return "";
+        }
+      }
+      set { }
+    }
+
+    public PlayingState PlayState 
+    {
+      get { return _playState; }
+      set 
+      { 
+        SetProperty(ref this._playState, value);
+        OnPropertyChanged(() => PlayStateAsStr);
+      } 
     }
 
     public String State
@@ -150,6 +181,10 @@ namespace PodCatchup.ViewModel
 
     private void OnPlayEpisode(object arg) 
     {
+      if (PlayState == PlayingState.Stopped)
+      {
+        LastPlayed = DateTime.Today.ToString();
+      }
       _eventAggregator.GetEvent<PlaySelectedEpisodeEvent>().Publish(this);
     }
     #endregion

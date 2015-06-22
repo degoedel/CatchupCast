@@ -106,6 +106,7 @@
     </ApplicationDefinition>
     <Compile Include="Events\ApplicationService.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Events\StopCurrentStreamEvent.cs" />
     <Compile Include="Events\StreamCompletedEvent.cs" />
     <Compile Include="Events\StreamProgressEvent.cs" />
     <Compile Include="Infrastructure\ILibraryLoader.cs" />

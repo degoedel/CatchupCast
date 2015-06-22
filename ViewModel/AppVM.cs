@@ -7,6 +7,7 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.Mvvm;
 using PodCatchup.Infrastructure;
 using PodCatchup.Model;
+using PodCatchup.Events;
 
 namespace PodCatchup.ViewModel
 {
@@ -55,6 +56,7 @@ namespace PodCatchup.ViewModel
 
     private void OnProcessExit(object sender, EventArgs e)
     {
+      ApplicationService.Instance.EventAggregator.GetEvent<StopCurrentStreamEvent>().Publish(true);
       ILibrarySaver saver = Container.Resolve<ILibrarySaver>();
       PodcastLibrary lib = _library.Library;
       saver.SaveLibrary(ref lib);

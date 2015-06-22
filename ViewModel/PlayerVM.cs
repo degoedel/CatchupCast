@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
+using System.Threading;
 
 namespace PodCatchup.ViewModel
 {
@@ -19,7 +20,6 @@ namespace PodCatchup.ViewModel
     protected readonly IEventAggregator _eventAggregator;
     private EpisodeVM _episode;
     TimeSpan _currentProgress;
-    TimeSpan _previousTick;
     #endregion
 
     #region Constructors
@@ -30,11 +30,13 @@ namespace PodCatchup.ViewModel
       TogglePlayCommand = new DelegateCommand<object>(this.OnTogglePlay, this.CanTogglePlay);
       _eventAggregator = ApplicationService.Instance.EventAggregator;
       this._eventAggregator.GetEvent<PlaySelectedEpisodeEvent>()
-        .Subscribe((episode) => { this.PlayEpisode(episode); });
+        .Subscribe((episode) => { this.StartOrPauseEpisode(episode); });
       this._eventAggregator.GetEvent<StreamProgressEvent>()
         .Subscribe((signet) => { this.UpdateProgress(signet); }, ThreadOption.UIThread);
       this._eventAggregator.GetEvent<StreamCompletedEvent>()
         .Subscribe((done) => { this.MarkEpisodeComplete(); }, ThreadOption.UIThread);
+      this._eventAggregator.GetEvent<StopCurrentStreamEvent>()
+        .Subscribe((done) => { this.PauseCurrentEpisode(); });
     }
     #endregion
 
@@ -116,13 +118,45 @@ namespace PodCatchup.ViewModel
     #endregion
 
     #region Interactivity
-    private void PlayEpisode(EpisodeVM episode)
+    private void StartOrPauseEpisode(EpisodeVM episode)
     {
+      if (Episode != null)
+      {
+        if (Episode.PlayState == EpisodeVM.PlayingState.Playing)
+        {
+          PauseCurrentEpisode();
+          Thread.Sleep(100);
+          if (Episode.Url.CompareTo(episode.Url) == 0)
+          {
+            return;
+          }
+        }
+      }
       Episode = episode;
-      _previousTick = TimeSpan.Parse("00:00:00");
-      StreamPlayer = Container.Resolve<IStreamPlayer>();
-      StreamPlayer.StreamFromUrl(Episode.Url, Episode.Signet);
+      if (StreamPlayer == null)
+      {
+        StreamPlayer = Container.Resolve<IStreamPlayer>();
+      }
+      PlayCurrentEpisode();
       RaiseCanExecuteChanged();
+    }
+
+    private void PauseCurrentEpisode()
+    {
+      if (StreamPlayer != null)
+      {
+        StreamPlayer.PauseStream();
+      }
+      if (Episode != null)
+      {
+        Episode.PlayState = EpisodeVM.PlayingState.Stopped;
+      }
+    }
+
+    private void PlayCurrentEpisode()
+    {
+      StreamPlayer.StreamFromUrl(Episode.Url, Episode.Signet);
+      Episode.PlayState = EpisodeVM.PlayingState.Playing;
     }
 
     private void UpdateProgress(TimeSpan signet)
@@ -142,7 +176,14 @@ namespace PodCatchup.ViewModel
 
     private void OnTogglePlay(object arg)
     {
-      StreamPlayer.PauseStream();
+      if (Episode.PlayState == EpisodeVM.PlayingState.Playing)
+      {
+        PauseCurrentEpisode();
+      }
+      else
+      {
+        PlayCurrentEpisode();
+      }
     }
 
     private void RaiseCanExecuteChanged()
