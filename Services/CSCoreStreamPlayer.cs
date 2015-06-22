@@ -23,6 +23,7 @@ namespace PodCatchup.Services
     {
       _play = true;
       Thread thread = new Thread(() => performPlay(surl, starttime));
+      thread.IsBackground = true;
       thread.Start();
     }
 

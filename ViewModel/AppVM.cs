@@ -56,7 +56,7 @@ namespace PodCatchup.ViewModel
 
     private void OnProcessExit(object sender, EventArgs e)
     {
-      ApplicationService.Instance.EventAggregator.GetEvent<StopCurrentStreamEvent>().Publish(true);
+      Player.PauseCurrentEpisode();
       ILibrarySaver saver = Container.Resolve<ILibrarySaver>();
       PodcastLibrary lib = _library.Library;
       saver.SaveLibrary(ref lib);

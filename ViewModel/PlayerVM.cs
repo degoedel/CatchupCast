@@ -35,8 +35,6 @@ namespace PodCatchup.ViewModel
         .Subscribe((signet) => { this.UpdateProgress(signet); }, ThreadOption.UIThread);
       this._eventAggregator.GetEvent<StreamCompletedEvent>()
         .Subscribe((done) => { this.MarkEpisodeComplete(); }, ThreadOption.UIThread);
-      this._eventAggregator.GetEvent<StopCurrentStreamEvent>()
-        .Subscribe((done) => { this.PauseCurrentEpisode(); });
     }
     #endregion
 
@@ -141,7 +139,7 @@ namespace PodCatchup.ViewModel
       RaiseCanExecuteChanged();
     }
 
-    private void PauseCurrentEpisode()
+    public void PauseCurrentEpisode()
     {
       if (StreamPlayer != null)
       {
