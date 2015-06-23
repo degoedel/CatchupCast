@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PodCatchup.Events;
 
 namespace PodCatchup
 {
@@ -23,6 +24,11 @@ namespace PodCatchup
     public MainWindow()
     {
       InitializeComponent();
+    }
+
+    public void MainWindow_Closing(object sender, System.EventArgs e)
+    {
+      ApplicationService.Instance.EventAggregator.GetEvent<ApplicationCloseEvent>().Publish(true);
     }
   }
 }

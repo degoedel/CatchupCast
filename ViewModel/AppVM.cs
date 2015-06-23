@@ -8,6 +8,8 @@ using Microsoft.Practices.Prism.Mvvm;
 using PodCatchup.Infrastructure;
 using PodCatchup.Model;
 using PodCatchup.Events;
+using Microsoft.Practices.Prism.PubSubEvents;
+using System.Threading;
 
 namespace PodCatchup.ViewModel
 {
@@ -24,7 +26,10 @@ namespace PodCatchup.ViewModel
       Container = container;
       _library = new PodcastLibraryVM(container);
       _player = new PlayerVM(container);
-      AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+      ApplicationService.Instance.EventAggregator.GetEvent<ApplicationCloseEvent>()
+  .Subscribe((done) => { this.OnApplicationExit(); }, ThreadOption.UIThread);
+
+      //AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
     }
     #endregion
 
@@ -54,9 +59,10 @@ namespace PodCatchup.ViewModel
       Library.Library = lib;
     }
 
-    private void OnProcessExit(object sender, EventArgs e)
+    private void OnApplicationExit()
     {
       Player.PauseCurrentEpisode();
+      Thread.Sleep(100);
       ILibrarySaver saver = Container.Resolve<ILibrarySaver>();
       PodcastLibrary lib = _library.Library;
       saver.SaveLibrary(ref lib);

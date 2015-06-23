@@ -104,6 +104,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Events\ApplicationCloseEvent.cs" />
     <Compile Include="Events\ApplicationService.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Events\StreamCompletedEvent.cs" />
@@ -112,7 +113,6 @@
     <Compile Include="Infrastructure\ILibrarySaver.cs" />
     <Compile Include="Infrastructure\IStreamPlayer.cs" />
     <Compile Include="Infrastructure\ISyndicationAnalyzer.cs" />
-    <Compile Include="Model\Player.cs" />
     <Compile Include="Modules\ExportModule.cs" />
     <Compile Include="Modules\ImportModule.cs" />
     <Compile Include="Modules\InteractivityModule.cs" />
