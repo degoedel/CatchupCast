@@ -23,7 +23,7 @@ namespace PodCatchup.Services
       String savefilename = Path.Combine(appdir, "PodCatchup.db");
       using (var db = new LiteDatabase(savefilename))
       {
-        var col = db.GetCollection<PodcastLibrary>("customers");
+        var col = db.GetCollection<PodcastLibrary>("library");
         if (library.Id == 0)
         {
           col.Insert(library);

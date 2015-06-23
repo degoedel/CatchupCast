@@ -1,9 +1,10 @@
-﻿<Window x:Class="PodCatchup.MainWindow"
+﻿<Controls:MetroWindow x:Class="PodCatchup.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="MainWindow" Height="350" Width="525"
         Closing="MainWindow_Closing">
     <Grid>
         <ContentControl Content="{Binding .}"/>
     </Grid>
-</Window>
+</Controls:MetroWindow>

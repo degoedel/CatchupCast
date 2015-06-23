@@ -19,7 +19,8 @@ namespace PodCatchup.ViewModel
     #region Members
     protected readonly IEventAggregator _eventAggregator;
     private EpisodeVM _episode;
-    TimeSpan _currentProgress;
+    private TimeSpan _currentProgress;
+    private bool _allowProgress;
     #endregion
 
     #region Constructors
@@ -27,6 +28,7 @@ namespace PodCatchup.ViewModel
     {
       Container = container;
       _currentProgress = TimeSpan.Parse("00:00:00");
+      _allowProgress = true;
       TogglePlayCommand = new DelegateCommand<object>(this.OnTogglePlay, this.CanTogglePlay);
       _eventAggregator = ApplicationService.Instance.EventAggregator;
       this._eventAggregator.GetEvent<PlayPauseSelectedEpisodeEvent>()
@@ -35,6 +37,10 @@ namespace PodCatchup.ViewModel
         .Subscribe((signet) => { this.UpdateProgress(signet); }, ThreadOption.UIThread);
       this._eventAggregator.GetEvent<StreamCompletedEvent>()
         .Subscribe((done) => { this.MarkEpisodeComplete(); }, ThreadOption.UIThread);
+      this._eventAggregator.GetEvent<SliderThumbReleasedEvent>()
+        .Subscribe((done) => { this.ResumePlay(); }, ThreadOption.UIThread);
+      this._eventAggregator.GetEvent<SliderThumbPressedEvent>()
+        .Subscribe((done) => { this.SuspendProgress(); }, ThreadOption.UIThread);
     }
     #endregion
 
@@ -80,7 +86,11 @@ namespace PodCatchup.ViewModel
           return CurrentProgress.TotalSeconds;
         }
       }
-      set { }
+      set 
+      {
+          TimeSpan val = TimeSpan.FromSeconds(value);
+          CurrentProgress = val;
+      }
     }
 
     public Double DurationAsS
@@ -187,12 +197,16 @@ namespace PodCatchup.ViewModel
 
     private void UpdateProgress(TimeSpan signet)
     {
-      CurrentProgress = signet;
+      if (_allowProgress)
+      {
+        CurrentProgress = signet;
+      }
     }
 
     private void MarkEpisodeComplete()
     {
-
+      PauseCurrentEpisode();
+      Episode.State = EpisodeVM.EpisodeState.Done;
     }
 
     private bool CanTogglePlay(object arg)
@@ -212,10 +226,22 @@ namespace PodCatchup.ViewModel
       }
     }
 
+    private void SuspendProgress()
+    {
+      _allowProgress = false;
+      PauseCurrentEpisode();
+    }
+
+    private void ResumePlay()
+    {
+      _allowProgress = true;
+      PlayCurrentEpisode();
+    }
+
     private void RaiseCanExecuteChanged()
     {
-      DelegateCommand<object> command = TogglePlayCommand as DelegateCommand<object>;
-      command.RaiseCanExecuteChanged();
+      DelegateCommand<object> command1 = TogglePlayCommand as DelegateCommand<object>;
+      command1.RaiseCanExecuteChanged();
     }
     #endregion
 

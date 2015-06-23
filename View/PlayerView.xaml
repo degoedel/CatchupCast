@@ -31,7 +31,7 @@
                 <Label Name="lblProgressStatus" Height="40" Width="75" Content="{Binding CurrentPositionAsTimeString}"/>
             </StatusBarItem>
             <StatusBarItem Grid.Column="1" HorizontalContentAlignment="Stretch">
-                <Slider Name="sliProgress" Value="{Binding CurrentProgressAsS}" Maximum="{Binding DurationAsS}" />
+        <Slider Name="sliProgress" Value="{Binding CurrentProgressAsS, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding DurationAsS}" Thumb.DragStarted="SuspendProgress"  Thumb.DragCompleted="ResumePlay"/>
             </StatusBarItem>
         </StatusBar>
     </Grid>

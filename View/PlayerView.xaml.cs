@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PodCatchup.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,16 @@ namespace PodCatchup.View
     public PlayerView()
     {
       InitializeComponent();
+    }
+
+    public void SuspendProgress(object sender, EventArgs e)
+    {
+      ApplicationService.Instance.EventAggregator.GetEvent<SliderThumbPressedEvent>().Publish(true);
+    }
+
+    public void ResumePlay(object sender, EventArgs e)
+    {
+      ApplicationService.Instance.EventAggregator.GetEvent<SliderThumbReleasedEvent>().Publish(true);
     }
   }
 }

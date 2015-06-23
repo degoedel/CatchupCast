@@ -23,7 +23,7 @@ namespace PodCatchup.Services
       }
       using (var db = new LiteDatabase(savefilename))
       {
-        var col = db.GetCollection<PodcastLibrary>("customers");
+        var col = db.GetCollection<PodcastLibrary>("library");
         if (col.Count() > 0)
         {
           return col.FindAll().First();
