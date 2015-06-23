@@ -16,6 +16,7 @@ namespace PodCatchup.ViewModel
   public class EpisodeVM : BindableBase
   {
     public enum PlayingState { Stopped, Playing };
+    public enum EpisodeState { New, InProgress, Done };
 
     #region Members
     private Episode _episode;
@@ -29,7 +30,7 @@ namespace PodCatchup.ViewModel
       Container = container;
       _eventAggregator = ApplicationService.Instance.EventAggregator;
       Episode = new Episode();
-      PlayEpisodeCommand = new DelegateCommand<object>(this.OnPlayEpisode, this.CanPlayEpisode);
+      PlayPauseEpisodeCommand = new DelegateCommand<object>(this.OnPlayPauseEpisode, this.CanPlayPauseEpisode);
       _playState = PlayingState.Stopped;
     }
     #endregion
@@ -66,16 +67,20 @@ namespace PodCatchup.ViewModel
         }
         return _episode.LastPlayed.ToString(); 
       }
-      set { _episode.LastPlayed = DateTime.Parse(value); }
+      set 
+      { 
+        _episode.LastPlayed = DateTime.Parse(value);
+        OnPropertyChanged(() => LastPlayed);
+      }
     }
 
-    public String PlayStateAsStr
+    public String PlayStateAsPic
     {
       get
       {
         if (PlayState == PlayingState.Playing)
         {
-          return ">";
+          return "/PodCatchup;component/icons/Play.png";
         }
         else
         {
@@ -91,43 +96,70 @@ namespace PodCatchup.ViewModel
       set 
       { 
         SetProperty(ref this._playState, value);
-        OnPropertyChanged(() => PlayStateAsStr);
+        OnPropertyChanged(() => PlayStateAsPic);
       } 
     }
 
-    public String State
+    public EpisodeState State
     {
       get
       {
         if (LastPlayed.CompareTo("Never") == 0)
         {
-          return "New";
+          return EpisodeState.New;
         }
         else
         {
           if (_episode.Signet > 0)
           {
-            return "In progress";
+            return EpisodeState.InProgress;
           }
           else
           {
-            return "Done";
+            return EpisodeState.Done;
           }
         }
 
       }
       set
       {
-        if (value.CompareTo("Done") == 0)
+        if (PlayState == PlayingState.Playing)
+        {
+          OnPlayPauseEpisode(null);
+        }
+        if (value == EpisodeState.Done)
         {
           LastPlayed = DateTime.Today.ToString();
           _episode.Signet = 0;
         }
-        else if (value.CompareTo("Never") == 0)
+        else if (value == EpisodeState.New)
         {
           LastPlayed = (new DateTime()).ToString();
           _episode.Signet = 0;
         }
+        OnPropertyChanged(() => StateAsStr);
+        OnPropertyChanged(() => ButtonPic);
+      }
+    }
+
+    public String StateAsStr
+    {
+      get
+      {
+        switch (State)
+        {
+          case EpisodeState.Done:
+            return "Done";
+          case EpisodeState.InProgress:
+            return "In progress";
+          case EpisodeState.New:
+            return "New";
+          default:
+            return "";
+        }
+      }
+      set
+      {
       }
     }
 
@@ -171,25 +203,43 @@ namespace PodCatchup.ViewModel
       set { _episode.Url = value; }
     }
 
+    public String ButtonPic
+    {
+      get
+      {
+        if (_playState == PlayingState.Playing)
+          {
+            return "/PodCatchup;component/icons/Pause2.png";
+          }
+          else
+          {
+            return "/PodCatchup;component/icons/Play2.png";
+          }
+      }
+      set
+      {
+
+      }
+    }
     #endregion
 
     #region CommandProperties
-    public ICommand PlayEpisodeCommand { get; set; }
+    public ICommand PlayPauseEpisodeCommand { get; set; }
     #endregion
 
     #region Interactivity
-    private bool CanPlayEpisode(object arg) 
+    private bool CanPlayPauseEpisode(object arg) 
     {
       return true;
     }
 
-    private void OnPlayEpisode(object arg) 
+    private void OnPlayPauseEpisode(object arg) 
     {
       if (PlayState == PlayingState.Stopped)
       {
         LastPlayed = DateTime.Today.ToString();
       }
-      _eventAggregator.GetEvent<PlaySelectedEpisodeEvent>().Publish(this);
+      _eventAggregator.GetEvent<PlayPauseSelectedEpisodeEvent>().Publish(this);
     }
     #endregion
 

@@ -118,6 +118,9 @@ namespace PodCatchup.ViewModel
 
     private void OnRemoveItem(object arg)
     {
+      PodcastVM current = (PodcastVM)arg;
+      _library.Library.Remove(current.Syndication);
+      RefreshLibrary();
     }
 
     private bool CanRemoveItem(object arg)
@@ -133,6 +136,7 @@ namespace PodCatchup.ViewModel
 
     private void RefreshLibrary()
     {
+      Podcasts.Clear();
       foreach (Podcast p in _library.Library.Values)
       {
         PodcastVM pvm = Container.Resolve<PodcastVM>();

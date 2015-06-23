@@ -91,7 +91,8 @@ namespace PodCatchup.ViewModel
     #region Interactivity
     private void OnContextRead(object arg)
     {
-
+      EpisodeVM current = (EpisodeVM)arg;
+      current.State = EpisodeVM.EpisodeState.Done;
     }
 
     private bool CanContextRead(object arg)
@@ -101,7 +102,8 @@ namespace PodCatchup.ViewModel
 
     private void OnContextNew(object arg)
     {
-
+      EpisodeVM current = (EpisodeVM)arg;
+      current.State = EpisodeVM.EpisodeState.New;
     }
 
     private bool CanContextNew(object arg)
@@ -112,6 +114,9 @@ namespace PodCatchup.ViewModel
 
     public void RefreshEpisodes()
     {
+      ISyndicationAnalyzer analyzer = Container.Resolve<ISyndicationAnalyzer>();
+      analyzer.RefreshPodcast(ref _podcast);
+      updateEpisodeCollection();
 
     }
 

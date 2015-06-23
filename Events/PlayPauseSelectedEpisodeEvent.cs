@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PodCatchup.Events
 {
-  public class PlaySelectedEpisodeEvent : PubSubEvent<EpisodeVM>
+  public class PlayPauseSelectedEpisodeEvent : PubSubEvent<EpisodeVM>
   {
   }
 }

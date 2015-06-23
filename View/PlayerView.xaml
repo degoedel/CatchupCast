@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Command="{Binding TogglePlayCommand}">
             <StackPanel>
-                <Image Source="/PodCatchup;component/icons/Play.png"/>
+                <Image Source="{Binding ButtonPic}"/>
             </StackPanel>
         </Button>
         <StatusBar Grid.Column="2">

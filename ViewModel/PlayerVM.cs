@@ -29,7 +29,7 @@ namespace PodCatchup.ViewModel
       _currentProgress = TimeSpan.Parse("00:00:00");
       TogglePlayCommand = new DelegateCommand<object>(this.OnTogglePlay, this.CanTogglePlay);
       _eventAggregator = ApplicationService.Instance.EventAggregator;
-      this._eventAggregator.GetEvent<PlaySelectedEpisodeEvent>()
+      this._eventAggregator.GetEvent<PlayPauseSelectedEpisodeEvent>()
         .Subscribe((episode) => { this.StartOrPauseEpisode(episode); });
       this._eventAggregator.GetEvent<StreamProgressEvent>()
         .Subscribe((signet) => { this.UpdateProgress(signet); }, ThreadOption.UIThread);
@@ -109,6 +109,32 @@ namespace PodCatchup.ViewModel
         OnPropertyChanged(() => CurrentProgressAsS);
       }
     }
+
+    public String ButtonPic
+    {
+      get
+      {
+        if (Episode == null)
+        {
+          return "/PodCatchup;component/icons/Play.png";
+        }
+        else
+        {
+          if (Episode.PlayState == EpisodeVM.PlayingState.Playing)
+          {
+            return "/PodCatchup;component/icons/Pause.png";
+          }
+          else
+          {
+            return "/PodCatchup;component/icons/Play.png";
+          }
+        }
+      }
+      set
+      {
+
+      }
+    }
     #endregion
 
     #region CommandProperties
@@ -149,12 +175,14 @@ namespace PodCatchup.ViewModel
       {
         Episode.PlayState = EpisodeVM.PlayingState.Stopped;
       }
+      OnPropertyChanged(() => ButtonPic);
     }
 
     private void PlayCurrentEpisode()
     {
       StreamPlayer.StreamFromUrl(Episode.Url, Episode.Signet);
       Episode.PlayState = EpisodeVM.PlayingState.Playing;
+      OnPropertyChanged(() => ButtonPic);
     }
 
     private void UpdateProgress(TimeSpan signet)

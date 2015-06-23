@@ -20,11 +20,17 @@
         <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Path=Summary}" TextWrapping="Wrap" />
         <DataGrid Name="EpisodesTable" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Episodes}" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header=" " Binding="{Binding PlayStateAsStr, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Title" Binding="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Published" Binding="{Binding Published, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Last Played" Binding="{Binding LastPlayed, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="State" Binding="{Binding State, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTemplateColumn Header="  " Width="30" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding PlayStateAsPic}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Title" IsReadOnly="True" Binding="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Published" IsReadOnly="True" Binding="{Binding Published, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Last Played" IsReadOnly="True" Binding="{Binding LastPlayed, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="State" IsReadOnly="True" Binding="{Binding StateAsStr, UpdateSourceTrigger=PropertyChanged}" />
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
