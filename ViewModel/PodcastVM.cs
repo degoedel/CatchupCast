@@ -8,6 +8,8 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.Mvvm;
 using PodCatchup.Infrastructure;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 
 namespace PodCatchup.ViewModel
 {
@@ -24,6 +26,8 @@ namespace PodCatchup.ViewModel
       Container = container;
       _podcast = new Podcast();
       _episodes = new ObservableCollection<EpisodeVM>();
+      ContextReadCommand = new DelegateCommand<object>(this.OnContextRead, this.CanContextRead);
+      ContextNewCommand = new DelegateCommand<object>(this.OnContextNew, this.CanContextNew);
       updateEpisodeCollection();
     }
 
@@ -80,10 +84,36 @@ namespace PodCatchup.ViewModel
     #endregion
 
     #region CommandProperties
+    public ICommand ContextReadCommand { get; set; }
+    public ICommand ContextNewCommand { get; set; }
     #endregion
 
     #region Interactivity
+    private void OnContextRead(object arg)
+    {
+
+    }
+
+    private bool CanContextRead(object arg)
+    {
+      return true;
+    }
+
+    private void OnContextNew(object arg)
+    {
+
+    }
+
+    private bool CanContextNew(object arg)
+    {
+      return true;
+    }
     #endregion
+
+    public void RefreshEpisodes()
+    {
+
+    }
 
     private void updateEpisodeCollection()
     {

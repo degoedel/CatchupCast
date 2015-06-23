@@ -23,6 +23,11 @@
                     <Image Source="{Binding Path=Cover}" Width="200"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Remove" Command="{Binding RemoveItemCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
     </Grid>
 </UserControl>

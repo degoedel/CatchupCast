@@ -52,11 +52,7 @@ namespace PodCatchup.ViewModel
 
     private IStreamPlayer StreamPlayer { get; set; }
 
-    #endregion
-
-    #region CommandProperties
-    public ICommand TogglePlayCommand { get; set; }
-    public String CurrentPositionAsTimeString 
+    public String CurrentPositionAsTimeString
     {
       get
       {
@@ -71,7 +67,7 @@ namespace PodCatchup.ViewModel
       }
       set { }
     }
-    public Double CurrentProgressAsS 
+    public Double CurrentProgressAsS
     {
       get
       {
@@ -87,7 +83,7 @@ namespace PodCatchup.ViewModel
       set { }
     }
 
-    public Double DurationAsS 
+    public Double DurationAsS
     {
       get
       {
@@ -102,17 +98,21 @@ namespace PodCatchup.ViewModel
       }
     }
 
-    public TimeSpan CurrentProgress 
+    public TimeSpan CurrentProgress
     {
       get { return _currentProgress; }
       set
       {
         SetProperty(ref this._currentProgress, value);
-        Episode.Signet = value;
+        Episode.Signet = _currentProgress;
         OnPropertyChanged(() => CurrentPositionAsTimeString);
         OnPropertyChanged(() => CurrentProgressAsS);
       }
     }
+    #endregion
+
+    #region CommandProperties
+    public ICommand TogglePlayCommand { get; set; }
     #endregion
 
     #region Interactivity

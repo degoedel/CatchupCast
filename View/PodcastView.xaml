@@ -26,6 +26,12 @@
                 <DataGridTextColumn Header="Last Played" Binding="{Binding LastPlayed, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="State" Binding="{Binding State, UpdateSourceTrigger=PropertyChanged}" />
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Mark as read"  Command="{Binding ContextReadCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                    <MenuItem Header="Mark as new" Command="{Binding ContextNewCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
         <ContentControl Grid.Row="2" Grid.Column="1" Content="{Binding Episodes.CurrentItem}"/>
     </Grid>

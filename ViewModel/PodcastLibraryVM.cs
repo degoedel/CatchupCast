@@ -36,6 +36,7 @@ namespace PodCatchup.ViewModel
 
       RefreshLibrary();
       AddPodcastCommand = new DelegateCommand<object>(this.OnAddPodcast, this.CanAddPodcast);
+      RemoveItemCommand = new DelegateCommand<object>(this.OnRemoveItem, this.CanRemoveItem);
     }
     #endregion
 
@@ -71,12 +72,17 @@ namespace PodCatchup.ViewModel
     public PodcastVM SelectedItem
     {
       get { return _selecteditem; }
-      set { SetProperty(ref this._selecteditem, value); }
+      set 
+      { 
+        SetProperty(ref this._selecteditem, value);
+        _selecteditem.RefreshEpisodes();
+      }
     }
     #endregion
 
     #region CommandProperties
     public ICommand AddPodcastCommand { get; set; }
+    public ICommand RemoveItemCommand { get; set; }
     #endregion
 
     #region Interactivity
@@ -108,6 +114,15 @@ namespace PodCatchup.ViewModel
       {
         return false;
       }
+    }
+
+    private void OnRemoveItem(object arg)
+    {
+    }
+
+    private bool CanRemoveItem(object arg)
+    {
+      return true;
     }
 
     private void RaiseCanExecuteChanged()

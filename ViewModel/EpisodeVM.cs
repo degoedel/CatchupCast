@@ -105,7 +105,7 @@ namespace PodCatchup.ViewModel
         }
         else
         {
-          if (_episode.Signet.TotalSeconds > 0)
+          if (_episode.Signet > 0)
           {
             return "In progress";
           }
@@ -121,12 +121,12 @@ namespace PodCatchup.ViewModel
         if (value.CompareTo("Done") == 0)
         {
           LastPlayed = DateTime.Today.ToString();
-          _episode.Signet = TimeSpan.Parse("00:00:00");
+          _episode.Signet = 0;
         }
         else if (value.CompareTo("Never") == 0)
         {
           LastPlayed = (new DateTime()).ToString();
-          _episode.Signet = TimeSpan.Parse("00:00:00");
+          _episode.Signet = 0;
         }
       }
     }
@@ -157,8 +157,12 @@ namespace PodCatchup.ViewModel
 
     public TimeSpan Signet 
     {
-      get { return _episode.Signet; }
-      set { _episode.Signet = value; } 
+      get { return TimeSpan.FromSeconds(_episode.Signet); }
+      set 
+      { 
+        _episode.Signet = value.TotalSeconds;
+        OnPropertyChanged(() => State);
+      } 
     }
 
     public String Url
