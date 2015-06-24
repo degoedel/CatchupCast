@@ -65,7 +65,7 @@ namespace PodCatchup.ViewModel
         {
           return "Never";
         }
-        return _episode.LastPlayed.ToString(); 
+        return _episode.LastPlayed.ToString("yyyy/MM/dd"); 
       }
       set 
       { 

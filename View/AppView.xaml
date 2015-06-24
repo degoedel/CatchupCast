@@ -4,15 +4,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="1000" d:DesignWidth="1200">
+      d:DesignHeight="650" d:DesignWidth="1360">
   <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="600*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="1100*"/>
         </Grid.ColumnDefinitions>
         <ContentControl Grid.RowSpan="2" Grid.Column="0" Content="{Binding Library}"/>
         <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding Library.SelectedItem}"/>

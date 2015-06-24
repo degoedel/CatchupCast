@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300">
+      d:DesignHeight="650" d:DesignWidth="260">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -12,15 +12,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
         <TextBox Grid.Row="0" Grid.Column="0" Margin="5,5,5,5" Text="{Binding Path=NewUrl, UpdateSourceTrigger=PropertyChanged}"/>
         <Button Grid.Row="0" Grid.Column="1"  Width="50" Content="Add" Margin="5,5,5,5" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddPodcastCommand}"/>
-        <ListView Grid.Row="1"  Grid.ColumnSpan="2" ItemsSource="{Binding Path=Podcasts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem}">
+        <ListView Grid.Row="1"  Grid.Column="0" ItemsSource="{Binding Path=Podcasts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem}" HorizontalContentAlignment="Left">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding Path=Cover}" Width="200"/>
+                    <Image Source="{Binding Path=Cover}" Width="200" Height="200"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ListView.ContextMenu>

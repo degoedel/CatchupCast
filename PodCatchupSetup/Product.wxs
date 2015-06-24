@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="!(wix.Product) !(wix.Target) v!(wix.Version)" Language="1033" Version="!(wix.Version)" Manufacturer="!(wix.Manufacturer)" UpgradeCode="e75aa8e8-0012-4624-b82c-f6cf4e5986b1">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Property Id="ApplicationFolderName" Value="My Program" />
+    <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
+    <WixVariable Id="Manufacturer" Value="Damien Galban"/>
+    <WixVariable Id="Product" Value="PodCatchup"/>
+    <WixVariable Id="Version" Value="1.0.0"/>
+    <WixVariable Id="Target" Value="x64"/>
+
+    <WixVariable Id="WixUILicenseRtf" Value="License.txt" />
+    <UIRef Id="WixUI_Minimal" />
+    
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+    <DirectoryRef Id="TARGETDIR">
+    </DirectoryRef>
+
+
+		<Feature Id="ProductFeature" Title="PodCatchupSetup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="ProductDependencies" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder" Name="PFiles">
+         <Directory Id="APPLICATIONFOLDER" Name="!(wix.Product)">
+ 			   </Directory>
+ 			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="APPLICATIONFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<Component Id="ProductComponent">
+        <File Id="PodCatchup" Name="PodCatchup.exe" Source="$(var.PodCatchup.TargetPath)" DiskId="1" KeyPath="yes" />
+			</Component>
+		</ComponentGroup>
+		<ComponentGroup Id="ProductDependencies" Directory="APPLICATIONFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<Component Id="CSCoreComponent">
+        <File Id="CsCore" Name="CSCore.dll" Source="$(var.PodCatchup.TargetPath)" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="LiteDBComponent">
+        <File Id="LiteDB" Name="LiteDB.dll" Source="$(var.PodCatchup.TargetDir)LiteDB.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="MahAppsComponent">
+        <File Id="MahApps" Name="MahApps.Metro.dll" Source="$(var.PodCatchup.TargetDir)MahApps.Metro.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="PrismComponentComposition">
+        <File Id="Composition" Name="Microsoft.Practices.Prism.Composition.dll" Source="$(var.PodCatchup.TargetDir)Microsoft.Practices.Prism.Composition.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="PrismComponentInteractivity">
+        <File Id="Interactivity" Name="Microsoft.Practices.Prism.Interactivity.dll" Source="$(var.PodCatchup.TargetDir)Microsoft.Practices.Prism.Interactivity.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="PrismComponentDesktop">
+        <File Id="Mvvm.Desktop" Name="Microsoft.Practices.Prism.Mvvm.Desktop.dll" Source="$(var.PodCatchup.TargetDir)Microsoft.Practices.Prism.Mvvm.Desktop.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="PrismComponentMvvm">
+        <File Id="Mvvm" Name="Microsoft.Practices.Prism.Mvvm.dll" Source="$(var.PodCatchup.TargetDir)Microsoft.Practices.Prism.Mvvm.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="PrismComponentPubSubEvents">
+        <File Id="PubSubEvents" Name="Microsoft.Practices.Prism.PubSubEvents.dll" Source="$(var.PodCatchup.TargetDir)Microsoft.Practices.Prism.PubSubEvents.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="PrismComponentSharedInterfaces">
+        <File Id="SharedInterfaces" Name="Microsoft.Practices.Prism.SharedInterfaces.dll" Source="$(var.PodCatchup.TargetDir)Microsoft.Practices.Prism.SharedInterfaces.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="PrismComponentUnityExtensions">
+        <File Id="UnityExtensions" Name="Microsoft.Practices.Prism.UnityExtensions.dll" Source="$(var.PodCatchup.TargetDir)Microsoft.Practices.Prism.UnityExtensions.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="ServiceLocationServiceLocation">
+        <File Id="ServiceLocation" Name="Microsoft.Practices.ServiceLocation.dll" Source="$(var.PodCatchup.TargetDir)Microsoft.Practices.ServiceLocation.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="UnityConfiguration">
+        <File Id="Unity.Configuration" Name="Microsoft.Practices.Unity.Configuration.dll" Source="$(var.PodCatchup.TargetDir)Microsoft.Practices.Unity.Configuration.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="PrismComponentUnity">
+        <File Id="Unity" Name="Microsoft.Practices.Unity.dll" Source="$(var.PodCatchup.TargetDir)Microsoft.Practices.Unity.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="PrismComponentRegistrationByConvention">
+        <File Id="Unity.RegistrationByConvention" Name="Microsoft.Practices.Unity.RegistrationByConvention.dll" Source="$(var.PodCatchup.TargetDir)Microsoft.Practices.Unity.RegistrationByConvention.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+			<Component Id="Windows">
+        <File Id="Windows.Interactivity" Name="System.Windows.Interactivity.dll" Source="$(var.PodCatchup.TargetDir)System.Windows.Interactivity.dll" DiskId="1" KeyPath="yes" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
