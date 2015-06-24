@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="!(wix.Product) !(wix.Target) v!(wix.Version)" Language="1033" Version="!(wix.Version)" Manufacturer="!(wix.Manufacturer)" UpgradeCode="e75aa8e8-0012-4624-b82c-f6cf4e5986b1">
+	<Product Id="*" Name="!(wix.Product) v!(wix.Version)" Language="1033" Version="!(wix.Version)" Manufacturer="!(wix.Manufacturer)" UpgradeCode="e75aa8e8-0012-4624-b82c-f6cf4e5986b1">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
     <Property Id="ApplicationFolderName" Value="My Program" />
     <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
@@ -43,7 +43,7 @@
 		<ComponentGroup Id="ProductDependencies" Directory="APPLICATIONFOLDER">
 			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
 			<Component Id="CSCoreComponent">
-        <File Id="CsCore" Name="CSCore.dll" Source="$(var.PodCatchup.TargetPath)" DiskId="1" KeyPath="yes" />
+        <File Id="CsCore" Name="CSCore.dll" Source="$(var.PodCatchup.TargetDir)CSCore.dll" DiskId="1" KeyPath="yes" />
 			</Component>
 			<Component Id="LiteDBComponent">
         <File Id="LiteDB" Name="LiteDB.dll" Source="$(var.PodCatchup.TargetDir)LiteDB.dll" DiskId="1" KeyPath="yes" />
