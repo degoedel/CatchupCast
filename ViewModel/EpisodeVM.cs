@@ -96,7 +96,10 @@ namespace PodCatchup.ViewModel
       set 
       { 
         SetProperty(ref this._playState, value);
+        OnPropertyChanged(() => ButtonPic);
         OnPropertyChanged(() => PlayStateAsPic);
+        OnPropertyChanged(() => StateAsStr);
+        OnPropertyChanged(() => LastPlayed);
       } 
     }
 

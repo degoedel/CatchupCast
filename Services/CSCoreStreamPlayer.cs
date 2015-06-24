@@ -53,8 +53,12 @@ namespace PodCatchup.Services
           Thread.Sleep(100);
           ApplicationService.Instance.EventAggregator.GetEvent<StreamProgressEvent>().Publish(soundsource.GetPosition());
         }
+        bool done = (soundOut.PlaybackState == PlaybackState.Stopped);
         soundOut.Stop();
-        ApplicationService.Instance.EventAggregator.GetEvent<StreamCompletedEvent>().Publish(true);
+        if (done)
+        {
+          ApplicationService.Instance.EventAggregator.GetEvent<StreamCompletedEvent>().Publish(true);
+        }
       }
  
     }
