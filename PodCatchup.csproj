@@ -136,6 +136,7 @@
     <Compile Include="Events\ApplicationCloseEvent.cs" />
     <Compile Include="Events\ApplicationService.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Events\GridRefreshEvent.cs" />
     <Compile Include="Events\SliderThumbPressedEvent.cs" />
     <Compile Include="Events\SliderThumbReleasedEvent.cs" />
     <Compile Include="Events\StreamCompletedEvent.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Services\SyndicationAnalyzer.cs" />
     <Compile Include="ViewModel\AppVM.cs" />
     <Compile Include="ViewModel\EpisodeVM.cs" />
+    <Compile Include="ViewModel\ObservableEpisodesCollection.cs" />
     <Compile Include="ViewModel\PlayerVM.cs" />
     <Compile Include="Events\PlayPauseSelectedEpisodeEvent.cs" />
     <Compile Include="ViewModel\PodcastLibraryVM.cs" />
@@ -241,20 +243,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\Pause2.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icons\Pause.png" />
     <Resource Include="icons\Play.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icons\Play2.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icons\Main.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icons\Main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\Nopic.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

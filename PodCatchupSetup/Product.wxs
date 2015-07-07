@@ -6,11 +6,18 @@
     <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
     <WixVariable Id="Manufacturer" Value="Damien Galban"/>
     <WixVariable Id="Product" Value="PodCatchup"/>
-    <WixVariable Id="Version" Value="1.0.0"/>
+    <WixVariable Id="Version" Value="1.1.0"/>
     <WixVariable Id="Target" Value="x64"/>
 
-    <WixVariable Id="WixUILicenseRtf" Value="License.txt" />
-    <UIRef Id="WixUI_Minimal" />
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder" Name="PFiles">
+        <Directory Id="APPLICATIONFOLDER" Name="!(wix.Product)">
+        </Directory>
+      </Directory>
+    </Directory>
+    <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONFOLDER" />    
+    <UIRef Id="WixUI_InstallDir" />
     
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate EmbedCab="yes" />
@@ -21,17 +28,8 @@
 		<Feature Id="ProductFeature" Title="PodCatchupSetup" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="ProductDependencies" />
-		</Feature>
+    </Feature>
 	</Product>
-
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder" Name="PFiles">
-         <Directory Id="APPLICATIONFOLDER" Name="!(wix.Product)">
- 			   </Directory>
- 			</Directory>
-		</Directory>
-	</Fragment>
 
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="APPLICATIONFOLDER">

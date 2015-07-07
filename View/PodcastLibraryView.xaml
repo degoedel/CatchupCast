@@ -15,12 +15,12 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Row="0" Grid.Column="0" Margin="5,5,5,5" Text="{Binding Path=NewUrl, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Row="0" Grid.Column="0" Margin="5,5,0,5" Text="{Binding Path=NewUrl, UpdateSourceTrigger=PropertyChanged}"/>
         <Button Grid.Row="0" Grid.Column="1"  Width="50" Content="Add" Margin="5,5,5,5" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddPodcastCommand}"/>
         <ListView Grid.Row="1"  Grid.Column="0" ItemsSource="{Binding Path=Podcasts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem}" HorizontalContentAlignment="Left">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding Path=Cover}" Width="200" Height="200"/>
+                    <Image Source="{Binding Path=Cover}" Width="180" Height="180" Margin="5,0,0,0"  HorizontalAlignment="Left" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ListView.ContextMenu>

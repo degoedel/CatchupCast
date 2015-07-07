@@ -28,7 +28,7 @@
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
             <StatusBarItem Grid.Column="0" >
-                <Label Name="lblProgressStatus" Height="40" Width="75" Content="{Binding CurrentPositionAsTimeString}"/>
+                <Label Name="lblProgressStatus" Height="40" Width="75" Content="{Binding CurrentPositionAsTimeString}" VerticalContentAlignment="Center"/>
             </StatusBarItem>
             <StatusBarItem Grid.Column="1" HorizontalContentAlignment="Stretch">
         <Slider Name="sliProgress" Value="{Binding CurrentProgressAsS, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding DurationAsS}" Thumb.DragStarted="SuspendProgress"  Thumb.DragCompleted="ResumePlay"/>

@@ -10,6 +10,7 @@ using PodCatchup.Infrastructure;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
+using PodCatchup.Events;
 
 namespace PodCatchup.ViewModel
 {
@@ -17,7 +18,7 @@ namespace PodCatchup.ViewModel
   {
     #region Members
     private Podcast _podcast;
-    ObservableCollection<EpisodeVM> _episodes;
+    ObservableEpisodesCollection _episodes;
     #endregion
 
     #region Constructors
@@ -25,7 +26,7 @@ namespace PodCatchup.ViewModel
     {
       Container = container;
       _podcast = new Podcast();
-      _episodes = new ObservableCollection<EpisodeVM>();
+      _episodes = new ObservableEpisodesCollection();
       ContextReadCommand = new DelegateCommand<object>(this.OnContextRead, this.CanContextRead);
       ContextNewCommand = new DelegateCommand<object>(this.OnContextNew, this.CanContextNew);
       updateEpisodeCollection();
@@ -70,7 +71,7 @@ namespace PodCatchup.ViewModel
       set { _podcast.Cover = value; }
     }
 
-    public ObservableCollection<EpisodeVM> Episodes
+    public ObservableEpisodesCollection Episodes
     {
       get { return _episodes; }
       set { SetProperty(ref this._episodes, value); }
@@ -129,6 +130,7 @@ namespace PodCatchup.ViewModel
         evm.Episode = ep;
         Episodes.Add(evm);
       }
+      Episodes.Sort("Published", System.ComponentModel.ListSortDirection.Descending);
     }
   }
 }

@@ -17,10 +17,10 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="400*"/>
         </Grid.ColumnDefinitions>
-        <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="{Binding Path=Cover}" />
-    <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Background="Transparent"  Command="{Binding PlayPauseEpisodeCommand}">
+        <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"  Width="100" Height="100" Source="{Binding Path=Cover}" Margin="0,0,0,0"/>
+        <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"   Width="100" Height="100" Background="Transparent"  Command="{Binding PlayPauseEpisodeCommand}" Margin="0,0,0,0">
       <StackPanel>
-                <Image Source="{Binding ButtonPic}" Width="100" Height="100"/>
+                <Image Source="{Binding ButtonPic}" Margin="0,0,0,0"/>
       </StackPanel>
     </Button>
         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontWeight="Bold" FontSize="24" TextAlignment="Center" TextWrapping="Wrap" Margin="5" />

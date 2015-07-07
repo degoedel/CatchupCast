@@ -52,7 +52,7 @@ namespace PodCatchup.ViewModel
 
     public String Published
     {
-      get { return _episode.Published.ToString(); }
+      get { return _episode.Published.ToString("yyyy/MM/dd HH:mm"); }
       set { _episode.Published = DateTime.Parse(value); }
     }
 
@@ -84,7 +84,7 @@ namespace PodCatchup.ViewModel
         }
         else
         {
-          return "";
+          return "/PodCatchup;component/icons/Nopic.png";
         }
       }
       set { }
@@ -212,11 +212,11 @@ namespace PodCatchup.ViewModel
       {
         if (_playState == PlayingState.Playing)
           {
-            return "/PodCatchup;component/icons/Pause2.png";
+            return "/PodCatchup;component/icons/Pause.png";
           }
           else
           {
-            return "/PodCatchup;component/icons/Play2.png";
+            return "/PodCatchup;component/icons/Play.png";
           }
       }
       set

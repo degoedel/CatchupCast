@@ -14,9 +14,13 @@ namespace PodCatchup.Services
   {
     public PodcastLibrary LoadLibrary()
     {
-      String mydocs = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-      String appdir = Path.Combine(mydocs, "PodCatchup");
-      String savefilename = Path.Combine(appdir, "PodCatchup.db");
+      String savefilename = "PodCatchup.db";
+      if (!File.Exists(".portable"))
+      {
+        String mydocs = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        String appdir = Path.Combine(mydocs, "PodCatchup");
+        savefilename = Path.Combine(appdir, "PodCatchup.db");
+      }
       if (!File.Exists(savefilename))
       {
         return new PodcastLibrary();
