@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using System.Threading;
+using System.Globalization;
 
 namespace PodCatchup.ViewModel
 {
@@ -103,7 +104,16 @@ namespace PodCatchup.ViewModel
         }
         else
         {
-          return TimeSpan.Parse(Episode.Duration).TotalSeconds;
+          double duration = 0;
+          try
+          {
+            duration = TimeSpan.Parse(Episode.Duration).TotalSeconds;
+          }
+          catch
+          {
+            duration = TimeSpan.ParseExact(Episode.Duration, "mm':'ss", null).TotalSeconds;
+          }
+          return duration;
         }
       }
     }

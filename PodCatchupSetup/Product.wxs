@@ -6,7 +6,7 @@
     <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
     <WixVariable Id="Manufacturer" Value="Damien Galban"/>
     <WixVariable Id="Product" Value="PodCatchup"/>
-    <WixVariable Id="Version" Value="1.1.0"/>
+    <WixVariable Id="Version" Value="1.2.0"/>
     <WixVariable Id="Target" Value="x64"/>
 
     <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
