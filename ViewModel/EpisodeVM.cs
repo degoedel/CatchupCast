@@ -175,7 +175,11 @@ namespace PodCatchup.ViewModel
     public String Duration
     {
       get { return _episode.Duration; }
-      set { _episode.Duration = value; }
+      set 
+      { 
+        _episode.Duration = value;
+        OnPropertyChanged(() => Duration);
+      }
     }
 
     public String SubTitle

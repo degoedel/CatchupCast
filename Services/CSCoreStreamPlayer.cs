@@ -47,6 +47,7 @@ namespace PodCatchup.Services
       {
         soundOut.Initialize(soundsource);
         soundsource.SetPosition(starttime);
+        ApplicationService.Instance.EventAggregator.GetEvent<StreamLengthAcquired>().Publish(soundsource.GetLength());
         soundOut.Play();
         while (_play && (soundOut.PlaybackState != PlaybackState.Stopped))
         {

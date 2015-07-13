@@ -42,6 +42,8 @@ namespace PodCatchup.ViewModel
         .Subscribe((done) => { this.ResumePlay(); }, ThreadOption.UIThread);
       this._eventAggregator.GetEvent<SliderThumbPressedEvent>()
         .Subscribe((done) => { this.SuspendProgress(); }, ThreadOption.UIThread);
+      this._eventAggregator.GetEvent<StreamLengthAcquired>()
+        .Subscribe((streamlength) => { this.UpdateDuration(streamlength); }, ThreadOption.UIThread);
     }
     #endregion
 
@@ -211,6 +213,12 @@ namespace PodCatchup.ViewModel
       {
         CurrentProgress = signet;
       }
+    }
+
+    private void UpdateDuration(TimeSpan streamlength)
+    {
+      Episode.Duration = string.Format(@"{0:hh\:mm\:ss}", streamlength);
+      OnPropertyChanged(() => DurationAsS);
     }
 
     private void MarkEpisodeComplete()
